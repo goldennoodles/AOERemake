@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+
+    public bool DebugMode = false;
     public int Gridx, Gridz;
 
     public Material GridTileMaterial;
@@ -25,8 +27,6 @@ public class Grid : MonoBehaviour
 
     
     IEnumerator GenerateWorldButSuperCool() {
-
-
         for (int x = 0; x < Gridx; x++)
         {
             for (int z = 0; z < Gridz; z++)
@@ -46,12 +46,32 @@ public class Grid : MonoBehaviour
             }
         }
 
-        terrainGenerator.GenerateTerrain(gridCoords);
+        StartCoroutine(terrainGenerator.GenerateTerrain(gridCoords));
+    }
+
+    private void GenerateWorld() {
+        for (int x = 0; x < Gridx; x++)
+        {
+            for (int z = 0; z < Gridz; z++)
+            {
+                tile.transform.name = "GroundTile: " + tileId;
+
+                Vector3 gridPos = new Vector3(x * GridSpacing, -0.3f, z * GridSpacing);
+
+                GameObject gridTile = Instantiate(tile, gridPos += AddNoiseOnAngle(0,30), Quaternion.identity) as GameObject;
+                gridTile.GetComponent<MeshRenderer>().material = GridTileMaterial;
+                gridTile.transform.SetParent(this.transform);
+                tileId++;
+                gridCoords.Add(gridTile.transform);
+
+            }
+        }
+
+        terrainGenerator.GenerateTerrainDebugMode(gridCoords);
     }
 
     private void Start()
     {
-
         terrainGenerator = FindObjectOfType<TerrainGenerator>();
         mainCamera = FindObjectOfType<Camera>();
 
@@ -62,27 +82,11 @@ public class Grid : MonoBehaviour
         mainCameraPos.y = 40f;
         mainCamera.transform.position = mainCameraPos;
 
-        StartCoroutine(GenerateWorldButSuperCool());
-
-        // GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
-        // for (int x = 0; x < Gridx; x++)
-        // {
-        //     for (int z = 0; z < Gridz; z++)
-        //     {
-
-        //         Vector3 gridPos = new Vector3(x * GridSpacing, -0.3f, z * GridSpacing);
-
-        //         GameObject gridTile = Instantiate(tile, gridPos += AddNoiseOnAngle(0,30), Quaternion.identity) as GameObject;
-        //         gridTile.GetComponent<MeshRenderer>().material = GridTileMaterial;
-        //         gridTile.transform.SetParent(this.transform);
-
-        //         gridCoords.Add(gridTile.transform);
-
-        //     }
-        // }
-
-        // terrainGenerator.GenerateTerrain(gridCoords);
+        if(DebugMode){
+            GenerateWorld();
+        } else {
+            StartCoroutine(GenerateWorldButSuperCool());
+        }
 
     }
 
@@ -111,16 +115,12 @@ public class Grid : MonoBehaviour
 
     public Vector3 GetCenterPointOnGrid()
     {
-
         int center = Gridx / Gridz;
-
         Vector3 result = new Vector3(
             (float)center * Gridx,
             (float)1,
             (float)center * Gridz);
-
         return result / 2;
-
     }
 
 

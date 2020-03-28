@@ -23,16 +23,29 @@ public class TerrainGenerator : MonoBehaviour
         objectType = new ObjectType();
         terrainHolder = new GameObject("TerrainHolder");
         //terrainPrefabs = new List<GameObject>();
-
     }
 
-    //Find an random GeneratedSpace, and puts a prefab.
-    public void GenerateTerrain (List<Transform> coordLocation) {
+    public void GenerateTerrainDebugMode(List<Transform> coordLocation) {
         //retrieve All Locations
         retreivedCoordsFromGridMaker = coordLocation;
         //Loop through Locations And Spawn Prefab.
+
         for (int i = 0; i < calculateTerrainDensity(); i++)
         {
+             GenerateTrees(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
+             GenerateRocks(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
+        }
+    }
+
+    //Find an random GeneratedSpace, and puts a prefab.
+    public IEnumerator GenerateTerrain (List<Transform> coordLocation) {
+        //retrieve All Locations
+        retreivedCoordsFromGridMaker = coordLocation;
+        //Loop through Locations And Spawn Prefab.
+
+        for (int i = 0; i < calculateTerrainDensity(); i++)
+        {
+            yield return new WaitForSeconds(0.2f);
              GenerateTrees(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
              GenerateRocks(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
         }
@@ -53,7 +66,7 @@ public class TerrainGenerator : MonoBehaviour
     //This will be done waaaaaaay in the future to make my life easier.
     private int calculateTerrainDensity() {
 
-        int calucalteDensity = (grid.Gridx * grid.Gridz) / Random.Range(19, 27);
+        int calucalteDensity = (grid.Gridx * grid.Gridz) / Random.Range(22, 27);
         Debug.Log("DensityCount: " + calucalteDensity); 
         return calucalteDensity;
     }
