@@ -30,7 +30,11 @@ public class TerrainGenerator : MonoBehaviour
 
     public void GenerateTerrainDebugMode(Transform coordLocation, ObjectType type) {
         //retrieve All Locations
-        retreivedCoordsFromGridMaker.Add(coordLocation);
+        if(!retreivedCoordsFromGridMaker.Contains(coordLocation)){
+            retreivedCoordsFromGridMaker.Add(coordLocation);
+        }
+        
+        retreivedCoordsFromGridMaker.Remove(null);
         //Loop through Locations And Spawn Prefab.
 
         Debug.Log(objectType);
@@ -53,7 +57,8 @@ public class TerrainGenerator : MonoBehaviour
         Vector3 newTransform = new Vector3(pos[randomLocationFromList].position.x,
         pos[randomLocationFromList].position.y,
         pos[randomLocationFromList].position.z);
-        //retreivedCoordsFromGridMaker.Remove(pos[randomLocationFromList]);
+
+        retreivedCoordsFromGridMaker.Remove(pos[randomLocationFromList]);
         return grid.GetNearestPointOnGrid(newTransform);
 
     }

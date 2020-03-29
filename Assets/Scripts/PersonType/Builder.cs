@@ -18,9 +18,9 @@ public class Builder : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.value * 1f);
 
-            float RandomPositionXRange = Random.Range(0, grid.Gridx);
+            float RandomPositionXRange = Random.Range(0, grid.Gridx * 2);
             float RandomPositionYRange = 0;
-            float RandomPositionZRange = Random.Range(0, grid.Gridz);
+            float RandomPositionZRange = Random.Range(0, grid.Gridz * 2);
 
             Vector3 localTarget;
             localTarget.x = (Random.value * 2 - 1) * RandomPositionXRange;
@@ -35,7 +35,7 @@ public class Builder : MonoBehaviour
 
                 var velocity = Vector3.zero;
                 var smoothedMotion = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, (4 * Time.deltaTime));
-                transform.position = Vector3.MoveTowards(transform.position, smoothedMotion, 4 * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, smoothedMotion, 2 * Time.deltaTime);
             }
         }
 

@@ -52,7 +52,7 @@ public class Grid : MonoBehaviour
 
 
     private void Update() {
-        StartCoroutine(generateLimitlessTerrain());    
+        StartCoroutine(generateLimitlessTerrain());
     }
 
     private void GenerateWorld(float ct)
@@ -127,10 +127,10 @@ public class Grid : MonoBehaviour
 
             foreach(Tile tls in generatedTile.Values){
                 if(tls.creationTime != upTime){
-                    //Destroy(tls.createdTile);
+                    generatedTile.Remove(tls.createdTile);
                 } else {
-                    terrainGenerator.GenerateTerrainDebugMode(HashToTransform(newTerrain), tileType);
                     newTerrain.Add(tls.createdTile.name, tls);
+                    terrainGenerator.GenerateTerrainDebugMode(HashToTransform(newTerrain), tileType);
                     }
                 }
                 yield return new WaitForSeconds(0.0f);
@@ -156,6 +156,10 @@ public class Grid : MonoBehaviour
             }
 
             return null;
+        }
+
+        public Vector3 randomPositionToTravelTo () {
+            return HashToTransform(generatedTile).position;
         }
 
     Vector3 AddNoiseOnAngle(float min, float max)
