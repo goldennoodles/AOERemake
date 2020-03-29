@@ -38,9 +38,9 @@ public class Grid : MonoBehaviour
         mainCamera = FindObjectOfType<Camera>();
 
         Vector3 mainCameraPos = mainCamera.transform.position;
-        mainCameraPos = GetCenterPointOnGrid();
-        mainCameraPos.x = mainCameraPos.x + -30f;
-        mainCameraPos.z = mainCameraPos.z + -30f;
+        //mainCameraPos = GetCenterPointOnGrid();
+        mainCameraPos.x = playerTransform.transform.position.x + -30f;
+        mainCameraPos.z = playerTransform.transform.position.z + -30f;
         mainCameraPos.y = 40f;
         mainCamera.transform.position = mainCameraPos;
 
@@ -110,6 +110,8 @@ public class Grid : MonoBehaviour
                         GameObject t = (GameObject)Instantiate(tilePrefab, pos, Quaternion.identity);
                         t.name = tileName;
                         t.transform.SetParent(this.transform);
+                        t.GetComponent<MeshRenderer>().material = GridTileMaterial;
+
 
                         Tile tile = new Tile(t, upTime, tileType);
                         Debug.Log(tileType);
@@ -131,7 +133,7 @@ public class Grid : MonoBehaviour
                     newTerrain.Add(tls.createdTile.name, tls);
                     }
                 }
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.0f);
 
                 startPos = playerTransform.transform.position;
             }
@@ -144,7 +146,7 @@ public class Grid : MonoBehaviour
         }
     }
 
-    private Transform HashToTransform (Hashtable toConvert) {
+    public Transform HashToTransform (Hashtable toConvert) {
             List<Transform> transformedList = new List<Transform>();
 
             foreach(DictionaryEntry tile in toConvert){

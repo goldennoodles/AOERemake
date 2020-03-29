@@ -527,12 +527,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0404ea99012fc2047b6213fc23acc19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugMode: 1
   Gridx: 10
   Gridz: 10
   GridTileMaterial: {fileID: 2100000, guid: 1efd67637b58e3c49937b83fe21e2fb0, type: 2}
-  GridSpacing: 1
-  gridCoords: []
   mainCamera: {fileID: 0}
   tilePrefab: {fileID: 7582448743689441742, guid: 307efb7f018ea2845afa506507630302,
     type: 3}
@@ -567,7 +564,7 @@ MonoBehaviour:
   - {fileID: 1150461584060438, guid: 836ca07fc69b4184ca14265c7d24030d, type: 3}
   - {fileID: 1371598241635088, guid: 3a33ce58c20826a4ea7253f84444654b, type: 3}
   - {fileID: 1106205639809762, guid: c53e680fdc8fae04d91b4ce9e548d2df, type: 3}
-  playerTransform: {fileID: 0}
+  retreivedCoordsFromGridMaker: []
 --- !u!1 &588217308
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,6 +622,7 @@ GameObject:
   - component: {fileID: 1029297255}
   - component: {fileID: 1029297254}
   - component: {fileID: 1029297253}
+  - component: {fileID: 1029297257}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -705,6 +703,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1029297257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029297252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2355c677a056eb4ba2a4cbd7cb2a14e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1280372315
 GameObject:
   m_ObjectHideFlags: 0
