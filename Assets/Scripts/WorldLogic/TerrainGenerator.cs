@@ -14,9 +14,10 @@ public class TerrainGenerator : MonoBehaviour
     
     // Private Fields
     private ObjectType objectType;
-    private List<Transform> retreivedCoordsFromGridMaker = new List<Transform>();
+    public List<Transform> retreivedCoordsFromGridMaker = new List<Transform>();
     private Grid grid;
     private GameObject terrainHolder;
+
     private void Awake()
     {
         grid = FindObjectOfType<Grid>();
@@ -25,29 +26,23 @@ public class TerrainGenerator : MonoBehaviour
         //terrainPrefabs = new List<GameObject>();
     }
 
-    public void GenerateTerrainDebugMode(List<Transform> coordLocation) {
+
+
+    public void GenerateTerrainDebugMode(Transform coordLocation, ObjectType type) {
         //retrieve All Locations
-        retreivedCoordsFromGridMaker = coordLocation;
+        retreivedCoordsFromGridMaker.Add(coordLocation);
         //Loop through Locations And Spawn Prefab.
 
-        for (int i = 0; i < calculateTerrainDensity(); i++)
+        Debug.Log(objectType);
+        for (int td = 0; td < calculateTerrainDensity; td++)
         {
-             GenerateTrees(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
-             GenerateRocks(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
-        }
-    }
-
-    //Find an random GeneratedSpace, and puts a prefab.
-    public IEnumerator GenerateTerrain (List<Transform> coordLocation) {
-        //retrieve All Locations
-        retreivedCoordsFromGridMaker = coordLocation;
-        //Loop through Locations And Spawn Prefab.
-
-        for (int i = 0; i < calculateTerrainDensity(); i++)
-        {
-            yield return new WaitForSeconds(0.2f);
-             GenerateTrees(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
-             GenerateRocks(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
+            if(type == ObjectType.Wood){
+                GenerateTrees(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
+            } else if (type == ObjectType.Stone){
+                GenerateRocks(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
+            } else if(type == ObjectType.Empty){
+                break;
+            }
         }
     }
 
@@ -58,17 +53,18 @@ public class TerrainGenerator : MonoBehaviour
         Vector3 newTransform = new Vector3(pos[randomLocationFromList].position.x,
         pos[randomLocationFromList].position.y,
         pos[randomLocationFromList].position.z);
-        retreivedCoordsFromGridMaker.Remove(pos[randomLocationFromList]);
+        //retreivedCoordsFromGridMaker.Remove(pos[randomLocationFromList]);
         return grid.GetNearestPointOnGrid(newTransform);
 
     }
 
     //This will be done waaaaaaay in the future to make my life easier.
-    private int calculateTerrainDensity() {
-
-        int calucalteDensity = (grid.Gridx * grid.Gridz) / Random.Range(22, 27);
-        Debug.Log("DensityCount: " + calucalteDensity); 
-        return calucalteDensity;
+    private int calculateTerrainDensity {
+        get{
+            int calucalteDensity = (grid.Gridx * grid.Gridz) / Random.Range(22, 27);
+            Debug.Log("DensityCount: " + calucalteDensity); 
+            return calucalteDensity;
+        }
     }
 
     private void GenerateTrees (Vector3 spawnPos) {
@@ -77,7 +73,6 @@ public class TerrainGenerator : MonoBehaviour
             spawnPos,
             Quaternion.identity)as GameObject;
         createdTerrain.transform.SetParent(terrainHolder.transform);
-        ObjectType woodObjectType = ObjectType.Wood;
     }
 
     private void GenerateRocks (Vector3 spawnPos) {
@@ -86,6 +81,6 @@ public class TerrainGenerator : MonoBehaviour
             spawnPos,
             Quaternion.identity)as GameObject;
         createdTerrain.transform.SetParent(terrainHolder.transform);
-        ObjectType woodObjectType = ObjectType.Stone;
     }
+
 }
