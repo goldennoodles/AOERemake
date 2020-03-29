@@ -130,11 +130,12 @@ public class Grid : MonoBehaviour
                     generatedTile.Remove(tls.createdTile);
                 } else {
                     newTerrain.Add(tls.createdTile.name, tls);
-                    terrainGenerator.GenerateTerrainDebugMode(HashToTransform(newTerrain), tileType);
                     }
                 }
                 yield return new WaitForSeconds(0.0f);
 
+                generatedTile = newTerrain;
+                terrainGenerator.GenerateTerrainDebugMode(HashToTransform(newTerrain), tileType);
                 startPos = playerTransform.transform.position;
             }
         }

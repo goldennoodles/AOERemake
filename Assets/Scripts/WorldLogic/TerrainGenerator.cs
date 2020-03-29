@@ -38,16 +38,14 @@ public class TerrainGenerator : MonoBehaviour
         //Loop through Locations And Spawn Prefab.
 
         Debug.Log(objectType);
-        for (int td = 0; td < calculateTerrainDensity; td++)
-        {
+
             if(type == ObjectType.Wood){
                 GenerateTrees(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
             } else if (type == ObjectType.Stone){
                 GenerateRocks(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
             } else if(type == ObjectType.Empty){
-                break;
+                return;
             }
-        }
     }
 
     int randomLocationFromList;
