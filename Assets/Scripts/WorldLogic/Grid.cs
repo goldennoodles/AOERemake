@@ -128,6 +128,7 @@ public class Grid : MonoBehaviour
             foreach(Tile tls in generatedTile.Values){
                 if(tls.creationTime != upTime){
                     generatedTile.Remove(tls.createdTile);
+                    GameObject.Destroy(tls.createdTile);
                 } else {
                     newTerrain.Add(tls.createdTile.name, tls);
                     }
