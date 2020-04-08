@@ -26,38 +26,45 @@ public class TerrainGenerator : MonoBehaviour
         //terrainPrefabs = new List<GameObject>();
     }
 
+    private List<Transform> getTilePositionFromGird () {
+        List<Transform> tileCount = new List<Transform>();
 
+        Hashtable girdTable = grid.generatedTile;
 
-    public void GenerateTerrainDebugMode(Transform coordLocation, ObjectType type) {
-        //retrieve All Locations
-        if(!retreivedCoordsFromGridMaker.Contains(coordLocation)){
-            retreivedCoordsFromGridMaker.Add(coordLocation);
+        foreach(DictionaryEntry tl in girdTable) {
+            Tile tmpTile = (Tile)tl.Value;
+            tileCount.Add(tmpTile.createdTile.transform);
         }
-        
-        retreivedCoordsFromGridMaker.Remove(null);
-        //Loop through Locations And Spawn Prefab.
+
+        return tileCount;
+
+
+    }
+
+    public void GenerateTerrainDebugMode(ObjectType type) {
+
 
         Debug.Log(objectType);
 
             if(type == ObjectType.Wood){
-                GenerateTrees(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
+                GenerateTrees(findAndRemoveSpawnedLocation(getTilePositionFromGird()));
             } else if (type == ObjectType.Stone){
-                GenerateRocks(findAndRemoveSpawnedLocation(retreivedCoordsFromGridMaker));
+                GenerateRocks(findAndRemoveSpawnedLocation(getTilePositionFromGird()));
             } else if(type == ObjectType.Empty){
                 return;
             }
     }
 
-    int randomLocationFromList;
     private Vector3 findAndRemoveSpawnedLocation (List<Transform> pos) {
-        randomLocationFromList = Random.Range(0, pos.Count);
 
-        Vector3 newTransform = new Vector3(pos[randomLocationFromList].position.x,
-        pos[randomLocationFromList].position.y,
-        pos[randomLocationFromList].position.z);
+        int randomIndex = Random.Range(0, pos.Count);
 
-        retreivedCoordsFromGridMaker.Remove(pos[randomLocationFromList]);
-        return grid.GetNearestPointOnGrid(newTransform);
+        Vector3 randomPosition = pos[randomIndex].transform.position;
+
+        pos.RemoveAt(randomIndex);
+
+        return randomPosition;
+
 
     }
 

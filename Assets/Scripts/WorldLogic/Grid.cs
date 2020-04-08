@@ -80,7 +80,7 @@ public class Grid : MonoBehaviour
             }
         }
         
-        terrainGenerator.GenerateTerrainDebugMode(HashToTransform(generatedTile), tileType);
+        terrainGenerator.GenerateTerrainDebugMode(tileType);
 
     }
 
@@ -136,7 +136,7 @@ public class Grid : MonoBehaviour
                 yield return new WaitForSeconds(0.0f);
 
                 generatedTile = newTerrain;
-                terrainGenerator.GenerateTerrainDebugMode(HashToTransform(newTerrain), tileType);
+                terrainGenerator.GenerateTerrainDebugMode(tileType);
                 startPos = playerTransform.transform.position;
             }
         }
@@ -147,22 +147,6 @@ public class Grid : MonoBehaviour
            return (ObjectType)Random.Range(0, 3);
         }
     }
-
-    public Transform HashToTransform (Hashtable toConvert) {
-            List<Transform> transformedList = new List<Transform>();
-
-            foreach(DictionaryEntry tile in toConvert){
-                Tile tmpTile = (Tile)tile.Value;
-                transformedList.Add(tmpTile.createdTile.transform);
-                return tmpTile.createdTile.transform;
-            }
-
-            return null;
-        }
-
-        public Vector3 randomPositionToTravelTo () {
-            return HashToTransform(generatedTile).position;
-        }
 
     Vector3 AddNoiseOnAngle(float min, float max)
     {
