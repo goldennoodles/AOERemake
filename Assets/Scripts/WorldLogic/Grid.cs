@@ -112,10 +112,11 @@ public class Grid : MonoBehaviour
                         t.transform.SetParent(this.transform);
                         t.GetComponent<MeshRenderer>().material = GridTileMaterial;
 
-
                         Tile tile = new Tile(t, upTime, tileType);
                         Debug.Log(tileType);
                         generatedTile.Add(tileName, tile);
+
+
 
                     } else {
                         (generatedTile[tileName] as Tile).creationTime = upTime;
@@ -129,15 +130,18 @@ public class Grid : MonoBehaviour
                 if(tls.creationTime != upTime){
                     generatedTile.Remove(tls.createdTile);
                     GameObject.Destroy(tls.createdTile);
+                
                 } else {
                     newTerrain.Add(tls.createdTile.name, tls);
                     }
                 }
-                yield return new WaitForSeconds(0.0f);
+
+                yield return new WaitForSeconds(0.2f);
 
                 generatedTile = newTerrain;
                 terrainGenerator.GenerateTerrainDebugMode(HashToTransform(newTerrain), tileType);
                 startPos = playerTransform.transform.position;
+                //.
             }
         }
 
