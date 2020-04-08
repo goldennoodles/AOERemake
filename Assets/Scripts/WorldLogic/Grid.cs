@@ -148,22 +148,6 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public Transform HashToTransform (Hashtable toConvert) {
-            List<Transform> transformedList = new List<Transform>();
-
-            foreach(DictionaryEntry tile in toConvert){
-                Tile tmpTile = (Tile)tile.Value;
-                transformedList.Add(tmpTile.createdTile.transform);
-                return tmpTile.createdTile.transform;
-            }
-
-            return null;
-        }
-
-        public Vector3 randomPositionToTravelTo () {
-            return HashToTransform(generatedTile).position;
-        }
-
     Vector3 AddNoiseOnAngle(float min, float max)
     {
         // Find random angle between min & max inclusive
