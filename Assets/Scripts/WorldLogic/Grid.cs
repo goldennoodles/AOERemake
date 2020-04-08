@@ -80,7 +80,7 @@ public class Grid : MonoBehaviour
             }
         }
         
-        terrainGenerator.GenerateTerrainDebugMode(HashToTransform(generatedTile), tileType);
+        terrainGenerator.GenerateTerrainDebugMode(tileType);
 
     }
 
@@ -136,7 +136,7 @@ public class Grid : MonoBehaviour
                 yield return new WaitForSeconds(0.0f);
 
                 generatedTile = newTerrain;
-                terrainGenerator.GenerateTerrainDebugMode(HashToTransform(newTerrain), tileType);
+                terrainGenerator.GenerateTerrainDebugMode(tileType);
                 startPos = playerTransform.transform.position;
             }
         }
