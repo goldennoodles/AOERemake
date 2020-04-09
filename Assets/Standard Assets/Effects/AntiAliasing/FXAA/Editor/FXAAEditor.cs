@@ -1,11 +1,8 @@
 using UnityEditor;
 
-namespace UnityStandardAssets.CinematicEffects
-{
-    public class FXAAEditor : IAntiAliasingEditor
-    {
-        private string[] presetNames =
-        {
+namespace UnityStandardAssets.CinematicEffects {
+    public class FXAAEditor : IAntiAliasingEditor {
+        private string[] presetNames = {
             "Extreme performance",
             "Performance",
             "Default",
@@ -13,36 +10,31 @@ namespace UnityStandardAssets.CinematicEffects
             "Extreme quality"
         };
 
+        public void OnEnable (SerializedObject serializedObject, string path) { }
 
-        public void OnEnable(SerializedObject serializedObject, string path)
-        {
-        }
-
-        public bool OnInspectorGUI(IAntiAliasing target)
-        {
-            var fxaaTarget = (FXAA)target;
+        public bool OnInspectorGUI (IAntiAliasing target) {
+            var fxaaTarget = (FXAA) target;
 
             if (!fxaaTarget.validSourceFormat)
-                EditorGUILayout.HelpBox("FXAA should be used at the end of the post-processing stack after conversion to LDR (after Tonemapping) to maximize quality and avoid artifacts.", MessageType.Warning);
+                EditorGUILayout.HelpBox ("FXAA should be used at the end of the post-processing stack after conversion to LDR (after Tonemapping) to maximize quality and avoid artifacts.", MessageType.Warning);
 
             int selectedPreset = 2;
 
-            if (fxaaTarget.preset.Equals(FXAA.Preset.extremePerformancePreset))
+            if (fxaaTarget.preset.Equals (FXAA.Preset.extremePerformancePreset))
                 selectedPreset = 0;
-            else if (fxaaTarget.preset.Equals(FXAA.Preset.performancePreset))
+            else if (fxaaTarget.preset.Equals (FXAA.Preset.performancePreset))
                 selectedPreset = 1;
-            else if (fxaaTarget.preset.Equals(FXAA.Preset.defaultPreset))
+            else if (fxaaTarget.preset.Equals (FXAA.Preset.defaultPreset))
                 selectedPreset = 2;
-            else if (fxaaTarget.preset.Equals(FXAA.Preset.qualityPreset))
+            else if (fxaaTarget.preset.Equals (FXAA.Preset.qualityPreset))
                 selectedPreset = 3;
-            else if (fxaaTarget.preset.Equals(FXAA.Preset.extremeQualityPreset))
+            else if (fxaaTarget.preset.Equals (FXAA.Preset.extremeQualityPreset))
                 selectedPreset = 4;
 
-            EditorGUI.BeginChangeCheck();
-            selectedPreset = EditorGUILayout.Popup("Preset", selectedPreset, presetNames);
+            EditorGUI.BeginChangeCheck ();
+            selectedPreset = EditorGUILayout.Popup ("Preset", selectedPreset, presetNames);
 
-            if (EditorGUI.EndChangeCheck())
-            {
+            if (EditorGUI.EndChangeCheck ()) {
                 if (selectedPreset < 0)
                     selectedPreset = 0;
                 else if (selectedPreset > 4)
