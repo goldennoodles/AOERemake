@@ -33,21 +33,11 @@ public class Chunk : MonoBehaviour
     {
 
         world = worldGO.GetComponent("World") as World;
-      
         mesh = GetComponent<MeshFilter>().mesh;
         col = GetComponent<MeshCollider>();
 
         GenerateMesh();
-
-
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void GenerateMesh()
     {
 
@@ -269,7 +259,7 @@ public class Chunk : MonoBehaviour
         newUV.Add(new Vector2(tUnit * texturePos.x, tUnit * texturePos.y + tUnit));
         newUV.Add(new Vector2(tUnit * texturePos.x, tUnit * texturePos.y));
 
-        faceCount++; // Add this line
+        faceCount++;
     }
 
     void UpdateMesh()

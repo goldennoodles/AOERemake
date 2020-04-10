@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1230111760527705903}
   - component: {fileID: 1230111760527705902}
   - component: {fileID: 1230111760527705889}
+  - component: {fileID: 254677813781555767}
   m_Layer: 0
   m_Name: Chunk
   m_TagString: Untagged
@@ -46,8 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a03aef8851b91144870e99ee1749ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunkSize: 16
   worldGO: {fileID: 0}
+  chunkSize: 16
+  chunkX: 0
+  chunkY: 0
+  chunkZ: 0
 --- !u!64 &1230111760527705903
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -87,7 +91,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e2f4060c3555dfd4697e33dae8aff6d4, type: 2}
+  - {fileID: 2100000, guid: 1efd67637b58e3c49937b83fe21e2fb0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,3 +111,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &254677813781555767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230111760527705888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b796093e4fc11d94a9612f06df61175e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tree: {fileID: 1732752170155260, guid: d82a0024cf3346b4695544dd461fb02b, type: 3}

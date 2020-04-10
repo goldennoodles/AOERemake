@@ -23,21 +23,13 @@ public class World : MonoBehaviour
         {
             for (int z = 0; z < worldZ; z++)
             {
-                int stone = PerlinNoise(x, 0, z, 10, 3, 1.2f);
-                stone += PerlinNoise(x, 300, z, 20, 4, 0) + 1;
-                int dirt = PerlinNoise(x, 100, z, 50, 3, 0) + 1;
 
                 for (int y = 0; y < worldY; y++)
                 {
-                    if (y <= stone)
+                    if (y <= 8)
                     {
                         data[x, y, z] = 1;
                     }
-                    else if (y <= dirt + stone)
-                    {
-                        data[x, y, z] = 2;
-                    }
-
                 }
             }
         }
@@ -54,7 +46,6 @@ public class World : MonoBehaviour
 
                     chunks[x, y, z] = Instantiate(chunk, new Vector3(x * chunkSize, y * chunkSize, z * chunkSize), new Quaternion(0, 0, 0, 0)) as GameObject;
                     Chunk newChunkScript = chunks[x, y, z].GetComponent("Chunk") as Chunk;
-               
                     newChunkScript.worldGO = gameObject;
                     newChunkScript.chunkSize = chunkSize;
                     newChunkScript.chunkX = x * chunkSize;
@@ -66,21 +57,6 @@ public class World : MonoBehaviour
         }
 
     }
-
-    int PerlinNoise(int x, int y, int z, float scale, float height, float power)
-    {
-        float rValue;
-        rValue = Noise.GetNoise(((double)x) / scale, ((double)y) / scale, ((double)z) / scale);
-        rValue *= height;
-
-        if (power != 0)
-        {
-            rValue = Mathf.Pow(rValue, power);
-        }
-
-        return (int)rValue;
-    }
-
 
     // Update is called once per frame
     void Update()
