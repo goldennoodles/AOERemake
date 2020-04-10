@@ -1,13 +1,4 @@
-﻿// DL FROM UNITY DOCS
-//////////////////////////////////////////////////////////////
-// This script moves the character controller forward
-// and sideways based on the arrow keys.
-// It also jumps when pressing space.
-// Make sure to attach a character controller to the same game object.
-// It is recommended that you make only one call to Move or SimpleMove per frame.
-//////////////////////////////////////////////////////////////
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,6 +15,7 @@ public class Movement : MonoBehaviour
     public float speed = 6.0f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
+    public float turnSpeed = 10.0f;
     Vector3 moveDirection;
 
 
@@ -64,7 +56,7 @@ public class Movement : MonoBehaviour
 
     //Current Zoom Velocity
     Vector3 velocity = new Vector3(0, 0, 10);
-
+    float angle;
     void Update()
     {
         //Horizontal Camera Rotation
@@ -72,11 +64,13 @@ public class Movement : MonoBehaviour
         {
             controlAxisHorizontal.y = -1; //Left
             CameraGyroB.RotateAround(transform.localPosition, controlAxisHorizontal, hrSpeed * Time.deltaTime);
+            angle = CameraGyroB.rotation.y;
         }
         if (Input.GetKey(KeyCode.E))
         {
             controlAxisHorizontal.y = 1; //Right
             CameraGyroB.RotateAround(transform.localPosition, controlAxisHorizontal, hrSpeed * Time.deltaTime);
+            angle = CameraGyroB.rotation.y;
         }
         if (Input.GetKey(KeyCode.Q) == false && Input.GetKey(KeyCode.E) == false)
         {
@@ -88,25 +82,28 @@ public class Movement : MonoBehaviour
         {
             controlAxisVertical.x = 1; //Up
             CameraGyroB.Rotate(controlAxisVertical, vrSpeed * Time.deltaTime);
+            angle = transform.rotation.x;
         }
         if (Input.GetKey(KeyCode.F))
         {
             controlAxisVertical.x = -1; //Down
             CameraGyroB.Rotate(controlAxisVertical, vrSpeed * Time.deltaTime);
+            angle = transform.rotation.x;
         }
         if (Input.GetKey(KeyCode.R) == false && Input.GetKey(KeyCode.F) == false)
         {
             controlAxisVertical.x = 0;
         }
 
-        //Horizontal Player Rotation
+        // //Horizontal Player Rotation
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(new Vector3(0,-1,0),Space.World);
+             characterController.Move(new Vector3(Input.GetAxis("Horizontal") * turnSpeed * Time.deltaTime,0,0));
+
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(new Vector3(0,1,0),Space.World);
+             characterController.Move(new Vector3(Input.GetAxis("Horizontal") * turnSpeed * Time.deltaTime,0,0));
         }
 
         //Scroll wheel zoom
@@ -114,7 +111,6 @@ public class Movement : MonoBehaviour
         {
             scroll(Input.GetAxis("Mouse ScrollWheel"));
         }
-
 
         //Player Movement + Jump
         if (characterController.isGrounded)
@@ -125,6 +121,7 @@ public class Movement : MonoBehaviour
             {
                 moveDirection.y = jumpSpeed;
             }
+            moveDirection.x += angle;
         }
         moveDirection.y -= gravity * Time.deltaTime;
 
@@ -135,7 +132,8 @@ public class Movement : MonoBehaviour
     void scroll(float zFactor)
     {
         //Need to solve this (Need to smoothly damp to new local z vector)
-        Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+        //if (DebugEnabled) { Debug.Log(Input.GetAxis("Mouse ScrollWheel")); }
+
         //Scroll Intensity
         float var = CameraGyroA.localPosition.z + Input.GetAxis("Mouse ScrollWheel") * scrollFactor;
         //if (DebugEnabled) { Debug.Log("Var: " + var); }
@@ -151,9 +149,9 @@ public class Movement : MonoBehaviour
         //Damp
         Vector3 damp = Vector3.SmoothDamp(zoomVector, zoomVector, ref velocity, Mathf.Round(ramp));
         //if (DebugEnabled) { Debug.Log("Damp: " + damp); }
+
         //Transform
         CameraGyroA.localPosition = damp;
         //if (DebugEnabled) { Debug.Log("Position: " + CameraGyroA.localPosition); }
-
     }
 }
