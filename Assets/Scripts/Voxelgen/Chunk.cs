@@ -22,7 +22,6 @@ public class Chunk : MonoBehaviour
 
     private int faceCount;
 
-    public int chunkSize = 16;
 
     public int chunkX;
     public int chunkY;
@@ -41,11 +40,11 @@ public class Chunk : MonoBehaviour
     void GenerateMesh()
     {
 
-        for (int x = 0; x < chunkSize; x++)
+        for (int x = 0; x < world.chunkSize; x++)
         {
-            for (int y = 0; y < chunkSize; y++)
+            for (int y = 0; y < world.chunkSize; y++)
             {
-                for (int z = 0; z < chunkSize; z++)
+                for (int z = 0; z < world.chunkSize; z++)
                 {
                     //This code will run for every block in the chunk
 
