@@ -76,7 +76,6 @@ public class World : MonoBehaviour
         {
             string name = "Chunk:" + x + "_" + y + "_" + z;
 
-            //Create a temporary Gameobject for the new chunk instead of using chunks[x,y,z]
             GameObject newChunk = Instantiate(chunk, new Vector3(x * chunkSize - 0.5f,
             0, z * chunkSize - 0.5f), new Quaternion(0, 0, 0, 0)) as GameObject;
 
