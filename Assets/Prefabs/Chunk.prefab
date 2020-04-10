@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1230111760527705888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1230111760527705901}
+  - component: {fileID: 1230111760527705900}
+  - component: {fileID: 1230111760527705903}
+  - component: {fileID: 1230111760527705902}
+  - component: {fileID: 1230111760527705889}
+  - component: {fileID: 254677813781555767}
+  m_Layer: 0
+  m_Name: Chunk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1230111760527705901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230111760527705888}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -40.83648, y: -0.02441597, z: 3.4323006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1230111760527705900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230111760527705888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a03aef8851b91144870e99ee1749ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldGO: {fileID: 0}
+  chunkSize: 32
+  chunkX: 0
+  chunkY: 0
+  chunkZ: 0
+--- !u!64 &1230111760527705903
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230111760527705888}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 0}
+--- !u!33 &1230111760527705902
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230111760527705888}
+  m_Mesh: {fileID: 0}
+--- !u!23 &1230111760527705889
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230111760527705888}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 1efd67637b58e3c49937b83fe21e2fb0, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &254677813781555767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230111760527705888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157517239c3441440b08ff70f2f20fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trees:
+  - {fileID: -927199367670048503, guid: 30da01e1bf6fcdc46841b55f5c733d6f, type: 3}
+  - {fileID: -927199367670048503, guid: 18e643b9060a4cf469f2c1543baaa345, type: 3}
+  - {fileID: -927199367670048503, guid: 8f7701fac9881d64aadd6c6d68dbe4f0, type: 3}
+  - {fileID: -927199367670048503, guid: cdf8d1f97150aa84ab400927a5db6c4e, type: 3}
+  - {fileID: -927199367670048503, guid: 52c435e6b4725dc41862ff090ea605d6, type: 3}
+  Rocks:
+  - {fileID: -927199367670048503, guid: 877cedd7b72ea3d448e2e9b1e4af7c5e, type: 3}
+  - {fileID: -927199367670048503, guid: f5d65bbd29a55694aa9b6db35828621c, type: 3}
+  - {fileID: -927199367670048503, guid: fde9bdde012d66c42afa2fe212b6e067, type: 3}
+  - {fileID: -927199367670048503, guid: b506d1bfe97c5034cb1ac4a47e4a44f4, type: 3}
+  - {fileID: -927199367670048503, guid: d05762e737491784cbf188108be01098, type: 3}
+  - {fileID: -927199367670048503, guid: e85fa2409f360d84c8bcc80e4b534ee1, type: 3}
+  Misc: []
+  treeCollection: []
+  rockCollection: []
