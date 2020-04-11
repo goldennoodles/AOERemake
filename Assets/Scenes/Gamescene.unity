@@ -200,10 +200,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65858757}
   m_LocalRotation: {x: 0.278358, y: 0.3791795, z: -0.13044088, w: 0.8727686}
-  m_LocalPosition: {x: -8.87, y: 22.12, z: -7.33}
+  m_LocalPosition: {x: -90.71022, y: 15.641694, z: -93.350136}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1528390440}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 35.789, y: 46.587, z: -1.172}
 --- !u!114 &65858762
@@ -454,7 +454,7 @@ Transform:
   - {fileID: 1844298267}
   - {fileID: 523926289}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1338671945
 GameObject:
@@ -541,10 +541,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338671945}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 36.431805, y: 18.013649, z: 8.01453}
+  m_LocalPosition: {x: -45.408413, y: 11.535342, z: -78.0056}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1528390440}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1352268219
@@ -576,7 +576,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1352268221
 MonoBehaviour:
@@ -595,6 +595,8 @@ MonoBehaviour:
   worldX: 320
   worldY: 16
   worldZ: 320
+  treeDensity: 0
+  rockDensity: 0
   playerTransform: {fileID: 1479859985}
 --- !u!1 &1479859985
 GameObject:
@@ -610,7 +612,7 @@ GameObject:
   - component: {fileID: 1479859987}
   - component: {fileID: 1479859986}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -701,6 +703,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1528390439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1528390440}
+  m_Layer: 0
+  m_Name: SceneManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1528390440
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528390439}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 81.84022, y: 6.478307, z: 86.020134}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 65858760}
+  - {fileID: 1338671947}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1594559233
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +746,7 @@ GameObject:
   - component: {fileID: 1594559235}
   - component: {fileID: 1594559234}
   m_Layer: 0
-  m_Name: TreePool
+  m_Name: TerrainPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -731,11 +765,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treePrefabs:
-  - {fileID: -927199367670048503, guid: a8c85a57cb127f948bde4a429fc8dea2, type: 3}
-  - {fileID: -927199367670048503, guid: 6681bd60a965bb4498ecdff290f88104, type: 3}
-  - {fileID: -927199367670048503, guid: 2bc5dfbb373401542aba333cfffbdc5f, type: 3}
-  - {fileID: -927199367670048503, guid: 45ffb75950690334ba0872af67beff65, type: 3}
-  - {fileID: -927199367670048503, guid: c0da081730f2e2f4dbba7c1eba5dc41c, type: 3}
+  - {fileID: -927199367670048503, guid: 30da01e1bf6fcdc46841b55f5c733d6f, type: 3}
+  - {fileID: -927199367670048503, guid: cdf8d1f97150aa84ab400927a5db6c4e, type: 3}
+  - {fileID: -927199367670048503, guid: 29400fcdb5aa3154694435c60bfe9b0c, type: 3}
+  - {fileID: -927199367670048503, guid: 8f7701fac9881d64aadd6c6d68dbe4f0, type: 3}
+  - {fileID: -927199367670048503, guid: 95c3bce48f2783445869b787b56c17c5, type: 3}
   rockPrefabs:
   - {fileID: -927199367670048503, guid: 877cedd7b72ea3d448e2e9b1e4af7c5e, type: 3}
   - {fileID: -927199367670048503, guid: f5d65bbd29a55694aa9b6db35828621c, type: 3}
@@ -755,7 +789,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1844298265
 GameObject:
