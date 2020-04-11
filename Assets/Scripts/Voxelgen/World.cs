@@ -94,7 +94,7 @@ public class World : MonoBehaviour
     {
         for (int y = 0; y < chunks.GetLength(1); y++)
         {
-            Object.Destroy(chunks[x, y, z].gameObject);
+            GameObject.Destroy(chunks[x, y, z].gameObject);
         }
 
     }

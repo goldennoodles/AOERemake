@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class TerrainGen : MonoBehaviour
 {
-    // 3
-    int heightScale = 4;
-    // 4f
-    float detailScale = 4.2f;
-    public GameObject[] Trees;
-    public GameObject[] Rocks;
-    public GameObject[] Misc;
+    int heightScale = 4;    // 3
+    float detailScale = 4.2f;     // 4f
+
     public List<GameObject> treeCollection = new List<GameObject>();
     public List<GameObject> rockCollection = new List<GameObject>();
 
-    private void noiseGenereation (Vector3[] verts, int v) {
-        float noiseSmoothing = 3f; 
+    private void noiseGenereation(Vector3[] verts, int v)
+    {
+        float noiseSmoothing = 3f;
 
-            float noiseIndex = Noise.GetNoise((verts[v].x + this.transform.position.x) / noiseSmoothing, 
-                (verts[v].y + this.transform.position.y * noiseSmoothing),
-                (verts[v].z + this.transform.position.z) / detailScale) * heightScale;
+        float noiseIndex = Noise.GetNoise((verts[v].x + this.transform.position.x) / noiseSmoothing,
+            (verts[v].y + this.transform.position.y * noiseSmoothing),
+            (verts[v].z + this.transform.position.z) / detailScale) * heightScale;
 
-                verts[v].y = (noiseIndex / noiseSmoothing) * 1f;
+        verts[v].y = (noiseIndex / noiseSmoothing) * 1f;
     }
 
     // Start is called before the first frame update
@@ -29,10 +26,9 @@ public class TerrainGen : MonoBehaviour
     {
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
         Vector3[] verts = mesh.vertices;
-        int rndTreeIndex = Random.Range(0, Trees.Length);
-        int rndRockIndex = Random.Range(0, Rocks.Length);
-        // Later will implement better perlin noise but for now, this will work.
-        for(int v = 0; v < verts.Length; v++) {
+
+        for (int v = 0; v < verts.Length; v++)
+        {
 
             noiseGenereation(verts, v);
 
@@ -40,35 +36,40 @@ public class TerrainGen : MonoBehaviour
 
             // verts[v].y = Mathf.PerlinNoise((verts[v].x + this.transform.position.x) / detailScale,
             //                                 (verts[v].z + this.transform.position.z) / detailScale) * heightScale;
-        
 
-            // if(verts[v].y > .4f) {
-            //     Vector3 treePos = new Vector3(verts[v].x + this.transform.position.x,
-            //                                     verts[v].y + this.transform.position.y,
-            //                                     verts[v].z + this.transform.position.z);
 
-            //     GameObject genTree = Instantiate(Trees[rndTreeIndex],
-            //     treePos, 
-            //     Quaternion.identity) as GameObject;
+            // The pure random function will not work on limitless or cheated terrain as the pos is not saved.. 
+            // Hashtable or Disctionary MAybe? Or another perlin noise?
+            if (verts[v].y > .4f && Random.Range(0, 100) < 10)
+            {
+                GameObject getTerrainTrees = TerrainPool.getTrees();
+                if (getTerrainTrees != null)
+                {
+                    Vector3 treePos = new Vector3(verts[v].x + this.transform.position.x,
+                                                verts[v].y + this.transform.position.y,
+                                                verts[v].z + this.transform.position.z);
 
-            //     genTree.transform.SetParent(this.transform);
+                    getTerrainTrees.transform.position = treePos;
+                    getTerrainTrees.SetActive(true);
+                    treeCollection.Add(getTerrainTrees);
+                }
+            }
 
-            //     treeCollection.Add(genTree);
-            // }
+            if (verts[v].y > 0.2f && verts[v].y < 0.3f && Random.Range(0, 100) < 10)
+            {
+                GameObject getTerrainRocks = TerrainPool.getRocks();
 
-            // if(verts[v].y > 0.2f && verts[v].y < 0.3f) {
-            //     Vector3 rockPos = new Vector3(verts[v].x + this.transform.position.x,
-            //                                     verts[v].y + this.transform.position.y,
-            //                                     verts[v].z + this.transform.position.z);
+                if (getTerrainRocks != null)
+                {
+                    Vector3 rockPos = new Vector3(verts[v].x + this.transform.position.x,
+                                                verts[v].y + this.transform.position.y,
+                                                verts[v].z + this.transform.position.z);
 
-            //     GameObject genRock = Instantiate(Rocks[rndRockIndex],
-            //     rockPos, 
-            //     Quaternion.identity) as GameObject;
-
-            //     genRock.transform.SetParent(this.transform);
-
-            //     rockCollection.Add(genRock);                
-            // }
+                    getTerrainRocks.transform.position = rockPos;
+                    getTerrainRocks.SetActive(true);
+                    rockCollection.Add(getTerrainRocks);
+                }
+            }
         }
 
         mesh.vertices = verts;
@@ -77,9 +78,16 @@ public class TerrainGen : MonoBehaviour
         this.gameObject.AddComponent<MeshCollider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        foreach(GameObject tree in treeCollection) {
+            tree.SetActive(false);
+        }
+
+        foreach(GameObject rock in rockCollection){
+            rock.SetActive(false);
+        }
+
+    
     }
 }
