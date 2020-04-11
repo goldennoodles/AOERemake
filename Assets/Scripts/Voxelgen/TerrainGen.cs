@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class TerrainGen : MonoBehaviour
 {
-    int heightScale = 4;    // 3
-    float detailScale = 4.2f;     // 4f
-
     public List<GameObject> treeCollection = new List<GameObject>();
     public List<GameObject> rockCollection = new List<GameObject>();
+    private int heightScale = 4;
+    private float detailScale = 4.2f; 
 
     private void noiseGenereation(Vector3[] verts, int v)
     {
         float noiseSmoothing = 3f;
-
         float noiseIndex = Noise.GetNoise((verts[v].x + this.transform.position.x) / noiseSmoothing,
             (verts[v].y + this.transform.position.y * noiseSmoothing),
             (verts[v].z + this.transform.position.z) / detailScale) * heightScale;
@@ -25,24 +23,19 @@ public class TerrainGen : MonoBehaviour
     void Start()
     {
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
+
         Vector3[] verts = mesh.vertices;
 
         for (int v = 0; v < verts.Length; v++)
         {
-
             noiseGenereation(verts, v);
-
-            /* Old noise generation for reference */
-
-            // verts[v].y = Mathf.PerlinNoise((verts[v].x + this.transform.position.x) / detailScale,
-            //                                 (verts[v].z + this.transform.position.z) / detailScale) * heightScale;
-
 
             // The pure random function will not work on limitless or cheated terrain as the pos is not saved.. 
             // Hashtable or Disctionary MAybe? Or another perlin noise?
             if (verts[v].y > .4f && Random.Range(0, 100) < 10)
             {
                 GameObject getTerrainTrees = TerrainPool.getTrees();
+                
                 if (getTerrainTrees != null)
                 {
                     Vector3 treePos = new Vector3(verts[v].x + this.transform.position.x,
@@ -51,6 +44,8 @@ public class TerrainGen : MonoBehaviour
 
                     getTerrainTrees.transform.position = treePos;
                     getTerrainTrees.SetActive(true);
+                    getTerrainTrees.transform.SetParent(this.transform);
+
                     treeCollection.Add(getTerrainTrees);
                 }
             }
@@ -67,6 +62,8 @@ public class TerrainGen : MonoBehaviour
 
                     getTerrainRocks.transform.position = rockPos;
                     getTerrainRocks.SetActive(true);
+                    getTerrainRocks.transform.SetParent(this.transform);
+
                     rockCollection.Add(getTerrainRocks);
                 }
             }
@@ -75,6 +72,7 @@ public class TerrainGen : MonoBehaviour
         mesh.vertices = verts;
         mesh.RecalculateBounds();
         mesh.RecalculateNormals();
+
         this.gameObject.AddComponent<MeshCollider>();
     }
 
@@ -83,11 +81,8 @@ public class TerrainGen : MonoBehaviour
         foreach(GameObject tree in treeCollection) {
             tree.SetActive(false);
         }
-
         foreach(GameObject rock in rockCollection){
             rock.SetActive(false);
         }
-
-    
     }
 }
