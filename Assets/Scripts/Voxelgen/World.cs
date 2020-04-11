@@ -74,7 +74,7 @@ public class World : MonoBehaviour
         get {
             int worldCentre = (worldX + worldZ) / chunkSize;
             Vector3 centerPos = new Vector3(
-                worldCentre, 2, worldCentre
+                worldCentre, 2.3f, worldCentre
             );
             return centerPos;
         }
