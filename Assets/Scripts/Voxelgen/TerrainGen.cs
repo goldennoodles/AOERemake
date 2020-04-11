@@ -8,6 +8,9 @@ public class TerrainGen : MonoBehaviour
     public List<GameObject> rockCollection = new List<GameObject>();
     private int heightScale = 4;
     private float detailScale = 4.2f; 
+    private Transform terrainHolder;
+
+    private World world;
 
     private void noiseGenereation(Vector3[] verts, int v)
     {
@@ -22,6 +25,8 @@ public class TerrainGen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        world = FindObjectOfType<World>() as World;
+        terrainHolder = FindObjectOfType<TerrainPool>().transform;
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
 
         Vector3[] verts = mesh.vertices;
@@ -32,11 +37,11 @@ public class TerrainGen : MonoBehaviour
 
             // The pure random function will not work on limitless or cheated terrain as the pos is not saved.. 
             // Hashtable or Disctionary MAybe? Or another perlin noise?
-            if (verts[v].y > .4f && Random.Range(0, 100) < 10)
+            if (verts[v].y > .4f && Random.Range(0, 100) <= world.treeDensity)
             {
                 GameObject getTerrainTrees = TerrainPool.getTrees();
                 
-                if (getTerrainTrees != null)
+                if (getTerrainTrees != null && world.treeDensity != 0)
                 {
                     Vector3 treePos = new Vector3(verts[v].x + this.transform.position.x,
                                                 verts[v].y + this.transform.position.y,
@@ -44,17 +49,17 @@ public class TerrainGen : MonoBehaviour
 
                     getTerrainTrees.transform.position = treePos;
                     getTerrainTrees.SetActive(true);
-                    getTerrainTrees.transform.SetParent(this.transform);
+                    getTerrainTrees.transform.SetParent(terrainHolder);
 
                     treeCollection.Add(getTerrainTrees);
                 }
             }
 
-            if (verts[v].y > 0.2f && verts[v].y < 0.3f && Random.Range(0, 100) < 10)
+            if (verts[v].y > 0.2f && verts[v].y < 0.3f && Random.Range(0, 100) < world.rockDensity)
             {
                 GameObject getTerrainRocks = TerrainPool.getRocks();
 
-                if (getTerrainRocks != null)
+                if (getTerrainRocks != null && world.rockDensity != 0)
                 {
                     Vector3 rockPos = new Vector3(verts[v].x + this.transform.position.x,
                                                 verts[v].y + this.transform.position.y,
@@ -62,7 +67,7 @@ public class TerrainGen : MonoBehaviour
 
                     getTerrainRocks.transform.position = rockPos;
                     getTerrainRocks.SetActive(true);
-                    getTerrainRocks.transform.SetParent(this.transform);
+                    getTerrainRocks.transform.SetParent(terrainHolder);
 
                     rockCollection.Add(getTerrainRocks);
                 }
