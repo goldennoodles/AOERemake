@@ -595,8 +595,8 @@ MonoBehaviour:
   worldX: 320
   worldY: 16
   worldZ: 320
-  treeDensity: 0
-  rockDensity: 0
+  treeDensity: 2
+  rockDensity: 2
   playerTransform: {fileID: 1479859985}
 --- !u!1 &1479859985
 GameObject:
