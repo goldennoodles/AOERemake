@@ -74,7 +74,7 @@ public class MainPlayer : MonoBehaviour {
     private bool isPlayerGrounded {
         get {
             RaycastHit hit;
-            if(Physics.Raycast(this.transform.position, Vector3.down, out hit, f)) {
+            if(Physics.Raycast(this.transform.position, Vector3.down, out hit)) {
                 Debug.Log("Player is grounded");
                 return true;
             }
