@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 65858764}
   - component: {fileID: 65858763}
   - component: {fileID: 65858762}
+  - component: {fileID: 65858761}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -206,6 +207,24 @@ Transform:
   m_Father: {fileID: 1528390440}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 35.789, y: 46.587, z: -1.172}
+--- !u!114 &65858761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65858757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922483fa99aef2a4597202c35c0df8c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subSteps: 1000
+  clampMin: -10
+  clampMax: -1
+  scrollFactor: 0.1
+  hrSpeed: 30
+  vrSpeed: 30
 --- !u!114 &65858762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,8 +614,8 @@ MonoBehaviour:
   worldX: 320
   worldY: 16
   worldZ: 320
-  treeDensity: 0
-  rockDensity: 0
+  treeDensity: 7
+  rockDensity: 13
   playerTransform: {fileID: 1479859985}
 --- !u!1 &1479859985
 GameObject:

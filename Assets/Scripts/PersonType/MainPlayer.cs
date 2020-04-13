@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+/***
+  *   Place holder for now just to checkout the terrain and move on with the project.
+  *   This will be revisited at a later date.
+  *   @author : Rus Kuzmin
+***/
 enum MovementDirection {
     Forward,
     Backwards,
@@ -10,14 +15,20 @@ enum MovementDirection {
     Jump
 }
 
-//[RequireComponent(typeof(Rigidbody))]
 public class MainPlayer : MonoBehaviour {
 
     private float speed = 20f;
     private float gravity = 20f;
+
     private Vector3 playerPos;
+    private Character builder;
     private GameObject playerObject;
+
     private void Start () {
+
+        // Adding this for now but no current plan or design implemented. I will come back to this.
+        builder = new Character(Character.characterType.Builder, this.gameObject);
+
         playerObject = this.gameObject;
         playerPos = this.transform.position;
     }
@@ -38,13 +49,8 @@ public class MainPlayer : MonoBehaviour {
             case MovementDirection.Right:
                 playerPos += Vector3.right * (speed * Time.deltaTime);
             break;
-            case MovementDirection.Jump:
-                int jumpForce = 5;
-                if(isPlayerGrounded && !isPlayerJumping){
-                    playerPos.y = jumpForce;
-                } else {
-                    playerPos.y -= gravity * Time.deltaTime;
-                }
+            default:
+                // Something Something Something //
             break;
         }
 
@@ -63,8 +69,6 @@ public class MainPlayer : MonoBehaviour {
                 return MovementDirection.Right;
             } else if (Input.GetKey(KeyCode.S)){
                 return MovementDirection.Backwards;
-            } else if (Input.GetKeyDown(KeyCode.Space)) {
-                return MovementDirection.Jump;
             } else {
                 return MovementDirection.Stationary;
             }
@@ -74,7 +78,7 @@ public class MainPlayer : MonoBehaviour {
     private bool isPlayerGrounded {
         get {
             RaycastHit hit;
-            if(Physics.Raycast(this.transform.position, Vector3.down, out hit, f)) {
+            if(Physics.Raycast(this.transform.position, Vector3.down, out hit, 1f)) {
                 Debug.Log("Player is grounded");
                 return true;
             }

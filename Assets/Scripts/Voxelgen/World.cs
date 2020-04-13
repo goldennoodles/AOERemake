@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/*
-Will implement the tileHolder(chunk) holderLater
-*/
+/**
+  *   Will implement the tileHolder(chunk) holderLater.
+  *   @author : Rus Kuzmin
+**/
 class Tile
 {
     public GameObject createdTile;
@@ -36,7 +37,7 @@ public class World : MonoBehaviour
     private float updatedTime;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         startPos = Vector3.zero;
         updatedTime = Time.realtimeSinceStartup;

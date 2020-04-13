@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+  *   @author : Rus Kuzmin
+**/
 public class TerrainGen : MonoBehaviour
 {
     public List<GameObject> treeCollection = new List<GameObject>();
@@ -9,7 +12,6 @@ public class TerrainGen : MonoBehaviour
     private int heightScale = 4;
     private float detailScale = 4.2f; 
     private Transform terrainHolder;
-
     private World world;
 
     private void noiseGenereation(Vector3[] verts, int v)
