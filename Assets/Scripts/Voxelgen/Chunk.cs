@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 /**
-  *   @author : Rus Kuzmin
+  *   @author : Rus Kuzmin..
 **/
 [RequireComponent(typeof(MeshCollider))]
 public class Chunk : MonoBehaviour
