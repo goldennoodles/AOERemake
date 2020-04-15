@@ -10,18 +10,42 @@ public class TerrainGen : MonoBehaviour
     public List<GameObject> treeCollection = new List<GameObject>();
     public List<GameObject> rockCollection = new List<GameObject>();
     private int heightScale = 4;
-    private float detailScale = 4.2f; 
+    private float detailScale = 4.2f;
     private Transform terrainHolder;
     private World world;
 
     private void noiseGenereation(Vector3[] verts, int v)
     {
-        float noiseSmoothing = 3f;
-        float noiseIndex = Noise.GetNoise((verts[v].x + this.transform.position.x) / noiseSmoothing,
-            (verts[v].y + this.transform.position.y * noiseSmoothing),
-            (verts[v].z + this.transform.position.z) / detailScale) * heightScale;
+        int a;
+        float noiseSmoothing = 2.2f;
 
-        verts[v].y = (noiseIndex / noiseSmoothing) * 1f;
+        int perl = PerlinNoise(
+            (verts[v].x + this.transform.position.x),
+            (verts[v].y + this.transform.position.y),
+            (verts[v].z + this.transform.position.z),
+            10, 3 ,1.2f);
+
+        perl += PerlinNoise(            
+            (verts[v].x + this.transform.position.x),
+            (verts[v].y + this.transform.position.y ),
+            (verts[v].z + this.transform.position.z),
+            20, 4, 0) + 10;
+
+        perl += PerlinNoise(            
+            (verts[v].x + this.transform.position.x),
+            (verts[v].y + this.transform.position.y),
+            (verts[v].z + this.transform.position.z),
+            50, 2, 0) + 1;
+
+        float noiseIndex = Noise.GetNoise((verts[v].x + this.transform.position.x),
+            (verts[v].y + this.transform.position.y),
+            (verts[v].z + this.transform.position.z) * 1);
+
+        a = perl += (int)noiseIndex;
+
+        verts[v].y = (a / noiseSmoothing);
+
+        // verts[v].y = (noiseIndex / noiseSmoothing) * 1f;
     }
 
     // Start is called before the first frame update
@@ -42,7 +66,7 @@ public class TerrainGen : MonoBehaviour
             if (verts[v].y > .4f && Random.Range(0, 100) <= world.treeDensity)
             {
                 GameObject getTerrainTrees = TerrainPool.getTrees();
-                
+
                 if (getTerrainTrees != null && world.treeDensity != 0)
                 {
                     Vector3 treePos = new Vector3(verts[v].x + this.transform.position.x,
@@ -83,12 +107,28 @@ public class TerrainGen : MonoBehaviour
         this.gameObject.AddComponent<MeshCollider>();
     }
 
+    int PerlinNoise(float x, float y, float z, float scale, float height, float power)
+    {
+        float rValue;
+        rValue = Noise.GetNoise(((double)x) / scale, ((double)y) / scale, ((double)z) / scale);
+        rValue *= height;
+
+        if (power != 0)
+        {
+            rValue = Mathf.Pow(rValue, power);
+        }
+
+        return (int)rValue;
+    }
+
     private void OnDestroy()
     {
-        foreach(GameObject tree in treeCollection) {
+        foreach (GameObject tree in treeCollection)
+        {
             tree.SetActive(false);
         }
-        foreach(GameObject rock in rockCollection){
+        foreach (GameObject rock in rockCollection)
+        {
             rock.SetActive(false);
         }
     }
