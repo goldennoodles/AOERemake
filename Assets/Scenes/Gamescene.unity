@@ -201,7 +201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65858757}
   m_LocalRotation: {x: 0.278358, y: 0.3791795, z: -0.13044088, w: 0.8727686}
-  m_LocalPosition: {x: -26.669998, y: 22.12, z: -18.93}
+  m_LocalPosition: {x: -38, y: 33, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1479859990}
@@ -614,8 +614,9 @@ MonoBehaviour:
   worldX: 320
   worldY: 16
   worldZ: 320
-  treeDensity: 0
-  rockDensity: 0
+  treeDensity: 7
+  rockDensity: 7
+  cloudDensity: 18
   playerTransform: {fileID: 1479859985}
 --- !u!1 &1479859985
 GameObject:
@@ -796,6 +797,11 @@ MonoBehaviour:
   - {fileID: -927199367670048503, guid: 4760c7dcfdf7477409bec0ac2f1840ba, type: 3}
   - {fileID: -927199367670048503, guid: ef043fc980910dd469fcc34c77855704, type: 3}
   - {fileID: -927199367670048503, guid: b506d1bfe97c5034cb1ac4a47e4a44f4, type: 3}
+  cloudPrefabs:
+  - {fileID: -927199367670048503, guid: 147bbf1c4c0dab14893dbe1e34ee11a6, type: 3}
+  - {fileID: -927199367670048503, guid: 8081d1dbb0cefaa43aa676f6e90b8e69, type: 3}
+  - {fileID: -927199367670048503, guid: 40b39ccff23a4694ba712890bb499179, type: 3}
+  - {fileID: -927199367670048503, guid: 9a8c0fe0946d1e944a9c30d1d6c83e31, type: 3}
 --- !u!4 &1594559235
 Transform:
   m_ObjectHideFlags: 0

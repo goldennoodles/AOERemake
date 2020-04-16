@@ -26,11 +26,16 @@ public class World : MonoBehaviour
     public int worldX = 16;
     public int worldY = 16;
     public int worldZ = 16;
+   
     [Header("Terrain Settings")]
     [Range(0, 20)]
     public int treeDensity = 10;    //Default = 10;
     [Range(0, 20)]
     public int rockDensity = 10;    //Default = 10;
+    [Range(0, 30)]
+    public int cloudDensity = 20;
+
+    [Header("Extra Settings")]
     public GameObject playerTransform;
     private Vector3 startPos;
     //private Hashtable generatedTile = new Hashtable();

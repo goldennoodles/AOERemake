@@ -9,10 +9,13 @@ public class TerrainGen : MonoBehaviour
 {
     public List<GameObject> treeCollection = new List<GameObject>();
     public List<GameObject> rockCollection = new List<GameObject>();
+    public List<GameObject> cloudCollection = new List<GameObject>();
+
     private int heightScale = 4;
     private float detailScale = 4.2f;
-    private Transform terrainHolder;
+
     private World world;
+    private Transform terrainHolder;
 
     private void noiseGenereation(Vector3[] verts, int v)
     {
@@ -81,7 +84,7 @@ public class TerrainGen : MonoBehaviour
                 }
             }
 
-            if (verts[v].y > 0.2f && verts[v].y < 0.3f && Random.Range(0, 100) < world.rockDensity)
+            if (verts[v].y > 0.2f && verts[v].y < 0.3f && Random.Range(0, 100) <= world.rockDensity)
             {
                 GameObject getTerrainRocks = TerrainPool.getRocks();
 
@@ -97,6 +100,23 @@ public class TerrainGen : MonoBehaviour
 
                     rockCollection.Add(getTerrainRocks);
                 }
+            }
+            if(verts[v].y > .4f && Random.Range(0, 100) <= world.cloudDensity) {
+                GameObject getTerrainClouds = TerrainPool.getClouds();
+                if (getTerrainClouds != null && world.cloudDensity != 0)
+                {
+                    int rndIndex = Random.Range(0, verts.Length - 1);
+                    Vector3 cloudPos = new Vector3(verts[rndIndex].x + this.transform.position.x,
+                                                (verts[v].y + this.transform.position.y) * 3,
+                                                verts[rndIndex].z + this.transform.position.z);
+
+                    getTerrainClouds.transform.position = cloudPos;
+                    getTerrainClouds.SetActive(true);
+                    getTerrainClouds.transform.SetParent(terrainHolder);
+
+                    cloudCollection.Add(getTerrainClouds);
+                }
+
             }
         }
 
@@ -130,6 +150,9 @@ public class TerrainGen : MonoBehaviour
         foreach (GameObject rock in rockCollection)
         {
             rock.SetActive(false);
+        }
+        foreach (GameObject cloud in cloudCollection) {
+            cloud.SetActive(false);
         }
     }
 }
