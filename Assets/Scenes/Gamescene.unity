@@ -214,7 +214,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65858757}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 922483fa99aef2a4597202c35c0df8c1, type: 3}
   m_Name: 
@@ -614,9 +614,9 @@ MonoBehaviour:
   worldX: 320
   worldY: 16
   worldZ: 320
-  treeDensity: 7
-  rockDensity: 7
-  cloudDensity: 18
+  treeDensity: 0
+  rockDensity: 1
+  cloudDensity: 2
   playerTransform: {fileID: 1479859985}
 --- !u!1 &1479859985
 GameObject:

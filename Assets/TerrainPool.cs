@@ -9,7 +9,7 @@ public class TerrainPool : MonoBehaviour
     public GameObject[] cloudPrefabs;
     //public GameObject[] Misc;
     private static int treeCount = 1000;
-    private static int rockCount = 150;
+    private static int rockCount = 100;
     private static int cloudCount = 10;
     private static GameObject[] trees;
     private static GameObject[] rocks;

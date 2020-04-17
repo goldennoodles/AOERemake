@@ -62,10 +62,14 @@ public class TerrainGen : MonoBehaviour
 
         for (int v = 0; v < verts.Length; v++)
         {
+
+            int rndIndex = Random.Range(0, verts.Length - 1);
+
             noiseGenereation(verts, v);
 
             // The pure random function will not work on limitless or cheated terrain as the pos is not saved.. 
             // Hashtable or Disctionary MAybe? Or another perlin noise?
+            /**   Tree Spawn   **/
             if (verts[v].y > .4f && Random.Range(0, 100) <= world.treeDensity)
             {
                 GameObject getTerrainTrees = TerrainPool.getTrees();
@@ -84,7 +88,8 @@ public class TerrainGen : MonoBehaviour
                 }
             }
 
-            if (verts[v].y > 0.2f && verts[v].y < 0.3f && Random.Range(0, 100) <= world.rockDensity)
+            /**   Rock Spawn   **/
+            if (Random.Range(0, 100) <= world.rockDensity)
             {
                 GameObject getTerrainRocks = TerrainPool.getRocks();
 
@@ -101,11 +106,13 @@ public class TerrainGen : MonoBehaviour
                     rockCollection.Add(getTerrainRocks);
                 }
             }
-            if(verts[v].y > .4f && Random.Range(0, 100) <= world.cloudDensity) {
+
+            /**   Cloud Spawn   **/
+            if(Random.Range(0, 100) <= world.cloudDensity) {
                 GameObject getTerrainClouds = TerrainPool.getClouds();
                 if (getTerrainClouds != null && world.cloudDensity != 0)
                 {
-                    int rndIndex = Random.Range(0, verts.Length - 1);
+                    getTerrainClouds.AddComponent<Cloud>();
                     Vector3 cloudPos = new Vector3(verts[rndIndex].x + this.transform.position.x,
                                                 (verts[v].y + this.transform.position.y) * 3,
                                                 verts[rndIndex].z + this.transform.position.z);

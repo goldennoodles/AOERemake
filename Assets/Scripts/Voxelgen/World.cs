@@ -32,8 +32,8 @@ public class World : MonoBehaviour
     public int treeDensity = 10;    //Default = 10;
     [Range(0, 20)]
     public int rockDensity = 10;    //Default = 10;
-    [Range(0, 30)]
-    public int cloudDensity = 20;
+    [Range(0, 10)]
+    public int cloudDensity = 10;
 
     [Header("Extra Settings")]
     public GameObject playerTransform;
