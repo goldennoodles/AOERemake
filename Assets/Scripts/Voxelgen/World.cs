@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/**
-  *   Will implement the tileHolder(chunk) holderLater.
-  *   @author : Rus Kuzmin
-**/
+/*
+Will implement the tileHolder(chunk) holderLater
+*/
 class Tile
 {
     public GameObject createdTile;
@@ -37,7 +36,7 @@ public class World : MonoBehaviour
     private float updatedTime;
 
     // Use this for initialization
-    private void Start()
+    void Start()
     {
         startPos = Vector3.zero;
         updatedTime = Time.realtimeSinceStartup;
@@ -73,9 +72,10 @@ public class World : MonoBehaviour
 
     private Vector3 spawnPlayerInCenter {
         get {
-            int worldCentre = (worldX + worldZ) / chunkSize;
+            int worldCentreX = worldX / 2;
+            int worldCentreZ = worldZ / 2;
             Vector3 centerPos = new Vector3(
-                worldCentre, 2.3f, worldCentre
+                worldCentreX, 2.3f, worldCentreZ
             );
             return centerPos;
         }
