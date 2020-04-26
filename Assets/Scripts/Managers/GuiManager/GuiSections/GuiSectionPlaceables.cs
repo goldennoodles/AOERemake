@@ -3,25 +3,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuiSectionPlaceables : GuiSection
-{
-    //Variables
-    List<Placeable> placeableList = new List<Placeable>();
+public class GuiSectionPlaceables :GuiSection {
 
-    //Getters and Setters
+    #region Variables
 
-    //Main Functionalities
+    [SerializeField]
+    private List<Placeable> _placeableList;
+    [SerializeField]
+    private GameObject _placeableIconPrefab;
 
-    private void Start() {
+    #endregion
+
+    #region Getters and Setters
+
+    public List<Placeable> PlaceableList {
+        get { return _placeableList; }
+        set { _placeableList = value; }
+    }
+
+    #endregion
+
+
+    #region Main Functionalities
+
+    private void Start () {
         Setup();
     }
 
+    #endregion
 
+    #region Auxiliar Functionalities
 
-    //Auxiliar Functionalities
-
-    private void Setup() {
+    private void Setup () {
         //throw new NotImplementedException();
+        //Test();
+
+        foreach (Placeable placeable in _placeableList) {
+            GameObject icon = Instantiate( _placeableIconPrefab );
+            icon.transform.SetParent( this.gameObject.transform );
+            //icon.GetComponent<GuiSectionPlaceableIcon>().Placeable = placeable;
+        }
     }
+
+    private void Test () {
+        _placeableList.Add( new Placeable() );
+        _placeableList.Add( new Placeable() );
+    }
+
+    #endregion
+
+
 
 }

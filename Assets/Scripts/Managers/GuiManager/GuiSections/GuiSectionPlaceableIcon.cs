@@ -3,34 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GuiSectionPlaceableIcon : MonoBehaviour
-{
-    //Variables
+public class GuiSectionPlaceableIcon :MonoBehaviour {
+
+    #region Variables
 
     [SerializeField]
-    Placeable placeable;
+    private Placeable _placeable;
 
     [SerializeField]
-    RawImage image;
+    private RawImage _image;
 
     ObjectPlacement objectPlacement;
 
-    //Getters and Setters
+    #endregion
 
-    //Main Functionalitites
-    public void OnClick() {
-        objectPlacement.SetSelectedPlaceableObject( this.placeable );
+
+    #region Getters and Setters
+
+    public Placeable Placeable {
+        get {
+            return this._placeable;
+        } set {
+            this._placeable = value;
+            //this._image.texture = value.Image;
+        }
     }
 
-    //Auxiliar Functionalities
+    #endregion
 
-    private void Start() {
+
+    #region Main Functionalitites
+
+    public void OnClick () {
+        objectPlacement.SetSelectedPlaceableObject( this._placeable );
+    }
+
+    #endregion
+
+    #region Auxiliar Functionalities
+
+    private void Start () {
         Setup();
         objectPlacement = GameObject.FindObjectOfType<ObjectPlacement>();
     }
 
-    void Setup() {
-        image.texture = placeable.Image;
+    void Setup () {
+        //this._image.texture = this._placeable.Image;
     }
-    
+
+    #endregion
 }

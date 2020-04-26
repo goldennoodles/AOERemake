@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPlacement : MonoBehaviour
-{
+public class ObjectPlacement :MonoBehaviour {
     //in progress...
-
-    //Strategy is to find the center of the square of each chunk and store it in a array or list
 
     //1. Get the Grid [OK]
     //2. Relate Grid to Chunk [OK]
@@ -17,79 +14,78 @@ public class ObjectPlacement : MonoBehaviour
     //How to handle changes in the environment?
     //How to handle different levels in Y axis?
 
+    #region Variables
 
-    //Variables
-    Dictionary<Chunk, List<PlaceableCell>> placementGrid = new Dictionary<Chunk, List<PlaceableCell>>();
-    List<GameObject> visualRepresentation = new List<GameObject>();
-
-    private List<Vector3> hitPoints = new List<Vector3>();
+    private Dictionary<Chunk, List<PlaceableCell>> _placementGrid = new Dictionary<Chunk, List<PlaceableCell>>();
+    private List<GameObject> _visualRepresentation = new List<GameObject>();
+    [SerializeField] private List<Vector3> _hitPoints = new List<Vector3>();
 
     [SerializeField]
-    Placeable selectedPlaceableObject;
-    GameObject selectedPleacableGameObject;
+    private Placeable _selectedPlaceableObject;
+    private GameObject _selectedPleacableGameObject;
 
-    //Getters and Setters
+    #endregion
 
+    #region Getters and Setters
 
+    #endregion
 
-    //Main Functionalities
+    #region Main Functionalities
 
     private void Update () {
 
-        //Just for test
-        if (Input.GetKeyDown(KeyCode.T)) {
+        if (Input.GetKeyDown( KeyCode.T )) {
             ShowPlacementGrid();
         }
 
-        if (selectedPlaceableObject != null) {
-            RaycastHit hitInfo;
-            Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-            if (Physics.Raycast( ray, out hitInfo )) {
-                hitPoints.Add( hitInfo.point );
-                MoveSelectedPlaceableObject( hitInfo.point );
+        if (_selectedPlaceableObject != null) {
+
+            Vector3 mousePosition3D = Utils.GetMousePosition3D();
+            if (mousePosition3D != Vector3.positiveInfinity) {
+                MoveSelectedPlaceableObject( mousePosition3D );
+                if (Input.GetMouseButtonDown( 0 )) {
+                    _hitPoints.Add( mousePosition3D );
+                    PlaceSelectedPlaceableObject( mousePosition3D );
+                }
             }
 
-            if (Input.GetMouseButtonDown(0)) {
-                Debug.Log("Placed");
-                PlaceSelectedPlaceableObject( hitInfo.point );
-            }
         }
 
     }
 
-    public void SetSelectedPlaceableObject(Placeable placeableSelected) {
-        selectedPlaceableObject = placeableSelected;
-        selectedPleacableGameObject = Instantiate( selectedPlaceableObject.gameObject );
+    public void SetSelectedPlaceableObject (Placeable placeableSelected) {
+        _selectedPleacableGameObject = Instantiate( placeableSelected.gameObject );
+        _selectedPlaceableObject = _selectedPleacableGameObject.GetComponent<Placeable>();
     }
 
-
-    private void MoveSelectedPlaceableObject( Vector3 mousePoint ) {
+    private void MoveSelectedPlaceableObject (Vector3 mousePoint) {
 
         PlaceableCell cellToPlace = GetNearestPlaceableCell( mousePoint );
-
+        if (cellToPlace == null) return;
         if (cellToPlace.IsFree()) {
-            selectedPleacableGameObject.transform.position = cellToPlace.Position;
+            _selectedPleacableGameObject.transform.position = cellToPlace.Position;
         }
 
     }
 
-    private void PlaceSelectedPlaceableObject(Vector3 clickPoint) {
+    private void PlaceSelectedPlaceableObject (Vector3 clickPoint) {
 
-        PlaceableCell cellToPlace = GetNearestPlaceableCell(clickPoint);
+        PlaceableCell cellToPlace = GetNearestPlaceableCell( clickPoint );
 
         if (cellToPlace.IsFree()) {
 
-            selectedPleacableGameObject.transform.position = cellToPlace.Position;
-            cellToPlace.AddPlaceable( selectedPleacableGameObject.GetComponent<Placeable>() );
-            selectedPlaceableObject = null;
+            cellToPlace.AddPlaceable( _selectedPlaceableObject );
+            _selectedPlaceableObject = null;
+            _selectedPleacableGameObject.transform.position = cellToPlace.Position;
+            //_selectedPleacableGameObject.transform.SetParent( cellToPlace to place chunk transform );
 
         }
-        
+
     }
 
     public void AddToPlacementGrid (Mesh mesh, Chunk chunk, Transform chunkTransform) {
 
-        if (placementGrid.ContainsKey(chunk)) return;
+        if (_placementGrid.ContainsKey( chunk )) return;
 
         List<Vector3> centerPoints = new List<Vector3>();
         Vector3 firstPoint = new Vector3();
@@ -97,32 +93,32 @@ public class ObjectPlacement : MonoBehaviour
         List<PlaceableCell> placeableCells = new List<PlaceableCell>();
 
         //For every square (4 vertices) store the center point
-        for (int i = 0; i < mesh.vertices.Length; i += 4) {
+        int length = mesh.vertices.Length;
+        for (int i = 0; i < length; i += 4) {
             firstPoint = mesh.vertices [ i ];//1
             lastPoint = mesh.vertices [ i + 2 ];//3
-            Vector3 centerPoint = ( ( chunkTransform.transform.TransformPoint(firstPoint) + chunkTransform.transform.TransformPoint(lastPoint) ) / 2 );
-            centerPoints.Add(centerPoint);
-            PlaceableCell cell = new PlaceableCell(centerPoint, null);
-            placeableCells.Add(cell);
+            Vector3 centerPoint = ( ( chunkTransform.transform.TransformPoint( firstPoint ) + chunkTransform.transform.TransformPoint( lastPoint ) ) / 2 );
+            centerPoints.Add( centerPoint );
+            PlaceableCell cell = new PlaceableCell( centerPoint, null, chunk );
+            placeableCells.Add( cell );
         }
-        
-        placementGrid.Add(chunk, placeableCells);
+
+        _placementGrid.Add( chunk, placeableCells );
 
     }
+    #endregion
 
+    #region Auxiliar Functionalities
 
-
-    //Auxiliar Functionalities
-
-    private void Start() {
+    private void Start () {
         Setup();
     }
 
-    private void Setup() {
-        selectedPlaceableObject = null;
+    private void Setup () {
+        _selectedPlaceableObject = null;
     }
 
-    private PlaceableCell GetNearestPlaceableCell(Vector3 position, Chunk chunk = null){
+    private PlaceableCell GetNearestPlaceableCell (Vector3 position, Chunk chunk = null) {
 
         PlaceableCell nearestPlaceableCell = null;
         float shortestDistance = float.PositiveInfinity;
@@ -132,35 +128,42 @@ public class ObjectPlacement : MonoBehaviour
         if (chunk == null) {
 
             PlaceableCell currentNearestPlaceableCell = null;
-            foreach (KeyValuePair<Chunk, List<PlaceableCell>> currentChunk in placementGrid) {
-                currentNearestPlaceableCell = GetNearestPlaceableCell(currentChunk.Value, position);
-                currentDistance = Vector3.Magnitude(currentNearestPlaceableCell.Position - position);
+            foreach (KeyValuePair<Chunk, List<PlaceableCell>> currentChunk in _placementGrid) {
+                currentNearestPlaceableCell = GetNearestPlaceableCell( currentChunk.Value, position );
+
+                //Debug.Log( currentNearestPlaceableCell );
+
+                currentDistance = Vector3.Magnitude( currentNearestPlaceableCell.Position - position );
                 if (currentDistance < shortestDistance) {
                     shortestDistance = currentDistance;
                     nearestPlaceableCell = currentNearestPlaceableCell;
                 }
             }
 
-        }
-        else
-        { //Search directly in the chunk
-            nearestPlaceableCell = GetNearestPlaceableCell(chunk, position);
+        } else { //Search directly in the chunk
+            nearestPlaceableCell = GetNearestPlaceableCell( chunk, position );
         }
         return nearestPlaceableCell;
 
     }
 
-    private PlaceableCell GetNearestPlaceableCell(List<PlaceableCell> placeableCells, Vector3 position) {
+    private PlaceableCell GetNearestPlaceableCell (List<PlaceableCell> placeableCells, Vector3 position) {
 
         float shortestDistance = float.PositiveInfinity;
         float currentDistance;
         PlaceableCell nearestPlaceableCell = null;
 
-        for (int i = 0; i < placeableCells.Count; i++) {
-            currentDistance = Vector3.Magnitude(placeableCells[i].Position - position);
+        Debug.Log( placeableCells );
+
+        int length = placeableCells.Count;
+        for (int i = 0; i < length; i++) {
+            currentDistance = Vector3.Magnitude( placeableCells [ i ].Position - position );
+            if (currentDistance == float.PositiveInfinity && nearestPlaceableCell == null) {
+                nearestPlaceableCell = placeableCells [ i ];
+            }
             if (currentDistance < shortestDistance) {
                 shortestDistance = currentDistance;
-                nearestPlaceableCell = placeableCells[i];
+                nearestPlaceableCell = placeableCells [ i ];
             }
         }
 
@@ -168,41 +171,42 @@ public class ObjectPlacement : MonoBehaviour
 
     }
 
-    private PlaceableCell GetNearestPlaceableCell(Chunk chunk, Vector3 position) {
+    private PlaceableCell GetNearestPlaceableCell (Chunk chunk, Vector3 position) {
 
         PlaceableCell nearestCell = null;
 
         List<PlaceableCell> placeableCells;
-        if (placementGrid.TryGetValue(chunk, out placeableCells))
-            nearestCell = GetNearestPlaceableCell(placeableCells, position);
+        if (_placementGrid.TryGetValue( chunk, out placeableCells ))
+            nearestCell = GetNearestPlaceableCell( placeableCells, position );
 
         return nearestCell;
 
     }
 
 
-    private void ShowPlacementGrid() {
+    private void ShowPlacementGrid () {
+        int length = _visualRepresentation.Count;
+        for (int i = 0; i < length; i++)
+            Object.Destroy( _visualRepresentation [ i ] );
+        _visualRepresentation.Clear();
 
-        for (int i = 0; i < visualRepresentation.Count; i++)
-            Object.Destroy(visualRepresentation [ i ]);
-        visualRepresentation.Clear();
-
-        foreach (KeyValuePair<Chunk, List<PlaceableCell>> x in placementGrid) {
-            for (int i = 0; i < x.Value.Count; i++) {
-                GameObject centerPoint = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                if (x.Value[i].IsFree() == false) {
+        foreach (KeyValuePair<Chunk, List<PlaceableCell>> x in _placementGrid) {
+            length = x.Value.Count;
+            for (int i = 0; i < length; i++) {
+                GameObject centerPoint = GameObject.CreatePrimitive( PrimitiveType.Plane );
+                if (x.Value [ i ].IsFree() == false) {
                     centerPoint.transform.localScale = new Vector3( 0.1f, 0.1f, 0.1f );
-                }
-                else {
+                } else {
                     centerPoint.transform.localScale = new Vector3( 0.01f, 0.1f, 0.01f );
                 }
-                
+
                 centerPoint.transform.position = x.Value [ i ].Position;
-                centerPoint.transform.SetParent(this.transform);
-                visualRepresentation.Add(centerPoint);
+                centerPoint.transform.SetParent( this.transform );
+                _visualRepresentation.Add( centerPoint );
             }
         }
 
     }
-    
+    #endregion
+
 }

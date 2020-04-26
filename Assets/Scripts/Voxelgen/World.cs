@@ -34,6 +34,9 @@ public class World : MonoBehaviour
     private Vector3 startPos;
     //private Hashtable generatedTile = new Hashtable();
     private float updatedTime;
+    [Header( "View Settings" )]
+    [SerializeField] private int _loadRange = 32;
+    [SerializeField] private int _unloadRange = 40;
 
     // Use this for initialization
     void Start()
@@ -42,7 +45,6 @@ public class World : MonoBehaviour
         updatedTime = Time.realtimeSinceStartup;
 
         data = new byte[worldX, worldY, worldZ];
-
 
         for (int x = 0; x < worldX; x++)
         {
@@ -67,7 +69,8 @@ public class World : MonoBehaviour
     }
     void Update()
     {
-        LoadChunks(playerTransform.transform.position, 32, 40);
+        //LoadChunks(playerTransform.transform.position, 32, 40);
+        LoadChunks(playerTransform.transform.position, _loadRange, _unloadRange);
     }
 
     private Vector3 spawnPlayerInCenter {

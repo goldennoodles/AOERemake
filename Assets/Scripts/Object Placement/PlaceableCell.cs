@@ -2,48 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceableCell
-{
-    //Variables
-    [SerializeField]
-    private Vector3 position;
+public class PlaceableCell {
+    #region Variables
 
     [SerializeField]
-    private Placeable placeable;
+    private Chunk _chunk;
 
-    //Getters and Setters
+    [SerializeField]
+    private Vector3 _position;
+
+    [SerializeField]
+    private Placeable _placeable;
+
+    #endregion
+
+    #region Getters and Setters
+
+    public Chunk Chunk {
+        get { return this._chunk; }
+        set { this._chunk = value; }
+    }
 
     public Vector3 Position {
-        get { return this.position; }
-        set { this.position = value; }
+        get { return this._position; }
+        set { this._position = value; }
     }
 
-    public Placeable Placeable
-    {
-        get { return this.placeable; }
-        set { this.placeable = value; }
+    public Placeable Placeable {
+        get { return this._placeable; }
+        set { this._placeable = value; }
     }
 
-    //Constructor
+    #endregion
 
-    public PlaceableCell(Vector3 position, Placeable placeable)
-    {
-        this.position = position;
-        this.placeable = placeable;
+    #region Main Functionalities
+
+    public PlaceableCell (Vector3 position, Placeable placeable, Chunk chunk) {
+        this.Position = position;
+        this.Placeable = placeable;
+        this.Chunk = chunk;
     }
 
-    //Main Functionalities
-
-    public bool IsFree(){
-        return (this.placeable == null) ? true : false;
+    public bool IsFree () {
+        return ( this.Placeable == null ) ? true : false;
     }
 
-    public void AddPlaceable(Placeable newPlaceable) {
+    public void AddPlaceable (Placeable newPlaceable) {
         this.Placeable = newPlaceable;
+        newPlaceable.transform.position = this.Position;
+        newPlaceable.gameObject.transform.SetParent( this.Chunk.transform );
     }
 
-    public void RemovePlaceable() {
+    public void RemovePlaceable () {
         this.Placeable = null;
     }
-    
+
+    #endregion
+
+    #region Auxiliar Functionalities
+
+    #endregion
+
 }
+

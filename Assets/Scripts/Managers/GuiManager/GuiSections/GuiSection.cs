@@ -2,35 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuiSection : MonoBehaviour
-{
-    //Variables
-    [SerializeField]
-    private string guiName;
-    [SerializeField]
-    private bool isEnabled;
+public class GuiSection :MonoBehaviour {
+    #region Variables
 
-    //Getters and Setters
+    [SerializeField]
+    private string _guiName;
+    [SerializeField]
+    private bool _isEnabled;
+
+    #endregion
+
+    #region Getters and Setters
+
     public string GuiName {
-        get { return guiName; }
-        set { guiName = value; }
+        get { return _guiName; }
+        set { _guiName = value; }
     }
 
     public bool IsEnabled {
-        get { return isEnabled; }
+        get { return _isEnabled; }
     }
 
-    //Main Functionalities
+    #endregion
+
+    #region Main Functionalities
+
     public void Enable () {
-        isEnabled = true;
-        this.gameObject.SetActive(true);
+        _isEnabled = true;
+        this.gameObject.SetActive( true );
     }
 
-    public void Disable() {
-        isEnabled = false;
-        this.gameObject.SetActive(false);
+    public void Disable () {
+        _isEnabled = false;
+        this.gameObject.SetActive( false );
     }
 
+    #endregion
 
-    //Auxiliar Functionalities
+    #region Auxiliar Functionalities
+
+    #endregion
 }

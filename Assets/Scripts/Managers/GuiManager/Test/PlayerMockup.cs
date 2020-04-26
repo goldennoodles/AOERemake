@@ -2,42 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMockup : MonoBehaviour
-{
+public class PlayerMockup :MonoBehaviour {
     //This class is generate only for testing purpose of the GUIManager
     //and should be replaced soon
 
-    float maxHpPossibleInGame = 700;
+    #region Variables
 
+    float maxHpPossibleInGame = 700;
     [SerializeField]
-    float currentHp;
+    private float _currentHp;
     [SerializeField]
-    float maxHp;
+    private float _maxHp;
+
+    #endregion
+
+    #region Getters and Setters
 
     public float CurrentHp {
-        get { return currentHp; }
+        get { return _currentHp; }
         set {
-            currentHp = value;
-            if (currentHp > maxHp)
-                currentHp = maxHp;
-            else if (currentHp < 0)
-                currentHp = 0;
+            _currentHp = value;
+            if (_currentHp > _maxHp)
+                _currentHp = _maxHp;
+            else if (_currentHp < 0)
+                _currentHp = 0;
         }
     }
 
     public float MaxHp {
-        get { return maxHp; }
+        get { return _maxHp; }
         set {
-            maxHp = value;
-            if (currentHp > maxHp)
-                currentHp = maxHp;
-            if (maxHp < 1) {
-                currentHp = 1;
-                maxHp = 1;
+            _maxHp = value;
+            if (_currentHp > _maxHp)
+                _currentHp = _maxHp;
+            if (_maxHp < 1) {
+                _currentHp = 1;
+                _maxHp = 1;
             }
-            if (maxHp > maxHpPossibleInGame)
-                maxHp = maxHpPossibleInGame;
+            if (_maxHp > maxHpPossibleInGame)
+                _maxHp = maxHpPossibleInGame;
         }
     }
 
+    #endregion
 }

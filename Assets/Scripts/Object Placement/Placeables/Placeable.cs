@@ -3,37 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Placeable : MonoBehaviour
-{
-    //Variables
+public class Placeable :MonoBehaviour {
+
+    #region Variables
 
     [SerializeField]
-    private Texture2D image;
+    private Texture2D _image;
+    private GameObject _gameObject;
 
-    private GameObject gameObject;
+    #endregion
 
-
-    //Getters and Setters
+    #region Getters and Setters
 
     public Texture2D Image {
-        get {
-            return this.image;
-        }
-        set {
-            this.image = value;
-        }
+        get { return this._image; }
+        set { this._image = value; }
     }
 
+    #endregion
 
-    //Main Functionalities
+    #region Main Functionalities
 
-    private void Start() {
+    private void Start () {
         Setup();
     }
 
-    //Auxiliar Functionalities
+    #endregion
 
-    private void Setup() {
-        gameObject = this.gameObject;
+    #region Auxiliar Functionalities
+
+    private void Setup () {
+        _gameObject = this.gameObject;
     }
+
+    #endregion
 }
