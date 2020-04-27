@@ -11,6 +11,7 @@ public class TerrainPool : MonoBehaviour
     private static int rockCount = 150;
     private static GameObject[] trees;
     private static GameObject[] rocks;
+
     void Start()
     {
         trees = new GameObject[treeCount];
@@ -33,6 +34,7 @@ public class TerrainPool : MonoBehaviour
             rocks[i].SetActive(false);
         }
     }
+
     public static GameObject getTrees () {
         for (int i = 0; i < treeCount; i++)
         {
@@ -42,6 +44,7 @@ public class TerrainPool : MonoBehaviour
         }
         return null;
     }
+
     public static GameObject getRocks () {
         for (int i = 0; i < rockCount; i++)
         {

@@ -2,11 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
-/**
-  *   @author : Rus Kuzmin.
-**/
-[RequireComponent(typeof(MeshCollider))]
 public class Chunk : MonoBehaviour
 {
 
