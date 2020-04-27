@@ -313,4 +313,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placeable: {fileID: 2947099536273804167, guid: b29f22bc7d8995a4e9d437f19cb86302,
     type: 3}
-  _image: {fileID: 0}
+  _image: {fileID: 4846496822354478205}

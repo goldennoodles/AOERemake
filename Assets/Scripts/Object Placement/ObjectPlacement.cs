@@ -12,7 +12,7 @@ public class ObjectPlacement :MonoBehaviour {
 
     //Future Problems:
     //How to handle changes in the environment?
-    //How to handle different levels in Y axis?
+    //How to handle different layers in Y axis?
 
     #region Variables
 
@@ -20,8 +20,7 @@ public class ObjectPlacement :MonoBehaviour {
     private List<GameObject> _visualRepresentation = new List<GameObject>();
     [SerializeField] private List<Vector3> _hitPoints = new List<Vector3>();
 
-    [SerializeField]
-    private Placeable _selectedPlaceableObject;
+    [SerializeField] private Placeable _selectedPlaceableObject;
     private GameObject _selectedPleacableGameObject;
 
     #endregion
@@ -129,11 +128,10 @@ public class ObjectPlacement :MonoBehaviour {
 
             PlaceableCell currentNearestPlaceableCell = null;
             foreach (KeyValuePair<Chunk, List<PlaceableCell>> currentChunk in _placementGrid) {
+
                 currentNearestPlaceableCell = GetNearestPlaceableCell( currentChunk.Value, position );
-
-                //Debug.Log( currentNearestPlaceableCell );
-
                 currentDistance = Vector3.Magnitude( currentNearestPlaceableCell.Position - position );
+
                 if (currentDistance < shortestDistance) {
                     shortestDistance = currentDistance;
                     nearestPlaceableCell = currentNearestPlaceableCell;
@@ -152,8 +150,6 @@ public class ObjectPlacement :MonoBehaviour {
         float shortestDistance = float.PositiveInfinity;
         float currentDistance;
         PlaceableCell nearestPlaceableCell = null;
-
-        Debug.Log( placeableCells );
 
         int length = placeableCells.Count;
         for (int i = 0; i < length; i++) {
@@ -185,6 +181,7 @@ public class ObjectPlacement :MonoBehaviour {
 
 
     private void ShowPlacementGrid () {
+
         int length = _visualRepresentation.Count;
         for (int i = 0; i < length; i++)
             Object.Destroy( _visualRepresentation [ i ] );

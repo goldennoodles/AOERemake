@@ -8,7 +8,7 @@ public class GuiSectionPlaceables :GuiSection {
     #region Variables
 
     [SerializeField]
-    private List<Placeable> _placeableList;
+    private List<String> _placeableList;
     [SerializeField]
     private GameObject _placeableIconPrefab;
 
@@ -16,7 +16,7 @@ public class GuiSectionPlaceables :GuiSection {
 
     #region Getters and Setters
 
-    public List<Placeable> PlaceableList {
+    public List<String> PlaceableList {
         get { return _placeableList; }
         set { _placeableList = value; }
     }
@@ -38,16 +38,20 @@ public class GuiSectionPlaceables :GuiSection {
         //throw new NotImplementedException();
         //Test();
 
-        foreach (Placeable placeable in _placeableList) {
+        foreach (String placeable in _placeableList) {
             GameObject icon = Instantiate( _placeableIconPrefab );
+            Placeable newPlaceable = Instantiate( 
+                                            Utils.GetPrefabByName<Placeable>("Placeables/"+ placeable ), 
+                                            new Vector3(-100, -100, -100),
+                                            Quaternion.identity );
             icon.transform.SetParent( this.gameObject.transform );
-            //icon.GetComponent<GuiSectionPlaceableIcon>().Placeable = placeable;
+            print( newPlaceable.Image );
+            icon.GetComponent<GuiSectionPlaceableIcon>().Placeable = newPlaceable;
         }
     }
 
     private void Test () {
-        _placeableList.Add( new Placeable() );
-        _placeableList.Add( new Placeable() );
+        _placeableList.Add( "House" );
     }
 
     #endregion

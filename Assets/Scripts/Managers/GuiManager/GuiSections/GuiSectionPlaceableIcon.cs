@@ -25,7 +25,15 @@ public class GuiSectionPlaceableIcon :MonoBehaviour {
             return this._placeable;
         } set {
             this._placeable = value;
-            //this._image.texture = value.Image;
+            this._image.texture = value.Image;
+        }
+    }
+
+    public RawImage Image {
+        get {
+            return this._image;
+        } set {
+            this._image = value;
         }
     }
 
